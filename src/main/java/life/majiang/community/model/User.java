@@ -1,6 +1,6 @@
 package life.majiang.community.model;
 
-public class User {
+public class User  {
 
     private int id;
 
@@ -13,6 +13,8 @@ public class User {
     private Long gmtCreate;
 
     private Long gmtModified;
+
+    private String bio;
 
     public int getId() {
         return id;
@@ -62,6 +64,14 @@ public class User {
         this.gmtModified = gmtModified;
     }
 
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -71,6 +81,7 @@ public class User {
                 ", token='" + token + '\'' +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModified=" + gmtModified +
+                ", bio='" + bio + '\'' +
                 '}';
     }
 }
