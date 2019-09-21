@@ -56,11 +56,11 @@ public class AuthorizeController {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             user.setBio(githubUser.getBio());
-            if(userMapper.findByAccountId(user.getAccountId()) == null){
+            /*if(userMapper.findByAccountId(user.getAccountId()) == null){
                 System.out.println(user);
-                userMapper.insert(user);
-                response.addCookie(new Cookie("token",token));
-            }
+            }*/
+            userMapper.insert(user);
+            response.addCookie(new Cookie("token",token));
             //request.getSession().setAttribute("user",githubUser);
             return "redirect:/";
         }else {
