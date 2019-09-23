@@ -9,9 +9,9 @@
     <!--<script src="js/bootstrap.min.js" type="application/javascript"></script>-->
      <!--最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
     <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/community.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -21,9 +21,9 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">码匠社区</span>
+                    <span class="sr-only">张创集团</span>
                 </button>
-                <a class="navbar-brand" href="#">码匠社区</a>
+                <a class="navbar-brand" href="/">张创集团</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-left">
@@ -33,6 +33,10 @@
                     <button type="submit" class="btn btn-default">搜索</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
+                    <li th:if="${session.user != null}">
+                        <a href="/publish">发布</a>
+
+                    </li>
                     <li class="dropdown" th:if="${session.user != null}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false" th:text="${session.user.getName()}">
@@ -51,5 +55,34 @@
             </div>
         </div>
     </nav>
+
+    <div class="container-fluid main bo">
+        <div class="row">
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                <h2>
+                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现
+                </h2>
+                <hr>
+                <div class="media" th:each="question : ${questions}">
+                    <div class="media-left media-middle">
+                        <a href="#">
+                            <img class="media-object img-rounded" th:src="${question.user.getAvatarUrl()}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading" th:text="${question.getTitle()}"></h4>
+                        <span th:text="${question.getDescription()}"></span>
+                        <span class="text-desc">
+                            <span th:text="${question.getCommentCount()}+个回复"></span> ·
+                            <span th:text="${question.getViewCount()}+次浏览"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                <h3>热门话题</h3>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -34,6 +34,10 @@ public class PublishController {
                             @RequestParam("tag")String tag,
                             HttpServletRequest request,
                             Model model){
+        model.addAttribute("title",title);
+        model.addAttribute("description",description);
+        model.addAttribute("tag",tag);
+
         User user = null;
         Cookie[] cookies = request.getCookies();
         if(cookies != null){
@@ -52,6 +56,22 @@ public class PublishController {
             model.addAttribute("error","用户未登录！！！");
             return "publish";
         }
+
+        if(title == null || title == ""){
+            model.addAttribute("error","标题不能为空！！！");
+            return "publish";
+        }
+
+        if(description == null || description == ""){
+            model.addAttribute("error","内容不能为空！！！");
+            return "publish";
+        }
+
+        if(tag == null || tag == ""){
+            model.addAttribute("error","标签不能为空！！！");
+            return "publish";
+        }
+
         Question question = new Question();
         question.setTitle(title);
         question.setDescription(description);
@@ -62,6 +82,6 @@ public class PublishController {
 
         questionMapper.create(question);
         model.addAttribute("success","发布成功！！！");
-        return "redirect:/";
+        return "publish";
     }
 }
