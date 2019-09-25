@@ -9,7 +9,6 @@ import life.majiang.community.model.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +23,21 @@ public class QuestionService {
 
     public PaginationDTO list(Integer page, Integer size) {
 
-        Integer offset = 0;
-        offset = size * (page - 1);
-        System.out.println("offset:"+offset);
-        System.out.println("size:"+size);
+        PaginationDTO paginationDTO = new PaginationDTO();
+        Integer totalCount = questionMapper.count();
+        paginationDTO.setPagination(totalCount,page,size);
+        if(page < 1){
+            page = 1;
+        }
+        if(page > paginationDTO.getTotalPage()) {
+            page = paginationDTO.getTotalPage();
+        }
+
+        Integer offset = size * (page - 1);
+
         List<Question> questions = questionMapper.list(offset,size);
         List<QuestionDTO> questionDTOS = new ArrayList<>();
 
-        PaginationDTO paginationDTO = new PaginationDTO();
         for (Question question : questions) {
             User user = userMapper.findByAccountId(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
@@ -40,8 +46,7 @@ public class QuestionService {
             questionDTOS.add(questionDTO);
         }
         paginationDTO.setQuestions(questionDTOS);
-        Integer totalCount = questionMapper.count();
-        paginationDTO.setPagination(totalCount,page,size);
+
         return paginationDTO;
     }
 }
