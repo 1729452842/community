@@ -36,12 +36,12 @@ public class PaginationDTO {
 
             if(page - i >= 1){
                 pages.add(0,page - i);
-                System.out.println("头："+page+pages);
+                //System.out.println("头："+page+pages);
             }
 
             if(page + i <= totalPage){
                 pages.add(page + i);
-                System.out.println("尾部："+page+pages);
+               // System.out.println("尾部："+page+pages);
             }
         }
 
