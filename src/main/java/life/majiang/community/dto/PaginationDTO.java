@@ -16,12 +16,15 @@ public class PaginationDTO {
     private Integer totalPage;
     private Integer page;
 
-    private List<Integer> pages = new ArrayList<Integer>();
+    private List<Integer> pages = new ArrayList<>();
 
 
     public void setPagination(Integer totalCount, Integer page, Integer size) {
 
         totalPage = (totalCount % size == 0) ? (totalCount / size) : (totalCount / size + 1);
+        if(totalPage == 0){
+            totalPage = 1;
+        }
 
         if(page < 1){
             page = 1;
