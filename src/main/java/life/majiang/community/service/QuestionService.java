@@ -87,4 +87,15 @@ public class QuestionService {
         BeanUtils.copyProperties(question,questionDTO);
         return questionDTO;
     }
+
+    public void createOrUpdate(Question question) {
+        if(question.getId() == null){
+            question.setGtmCreate(System.currentTimeMillis());
+            question.setGtmModified(question.getGtmCreate());
+            questionMapper.create(question);
+        }else{
+            question.setGtmModified(question.getGtmCreate());
+            questionMapper.update(question);
+        }
+    }
 }
